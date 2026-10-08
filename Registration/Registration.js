@@ -4,12 +4,32 @@ const stateSelect = document.getElementById("state");
 const countrySearch = document.getElementById("countrySearch");
 const stateSearch = document.getElementById("stateSearch");
 
+function togglePasswordVisibility(button) {
+  const targetId = button.dataset.toggleTarget;
+  const input = document.getElementById(targetId);
+
+  const shouldShow = input.type === "password";
+  input.type = shouldShow ? "text" : "password";
+  button.textContent = shouldShow ? "Hide" : "Show";
+  button.setAttribute("aria-pressed", String(shouldShow));
+  button.setAttribute(
+    "aria-label",
+    `${shouldShow ? "Hide" : "Show"} ${targetId === "confirmPassword" ? "confirm " : ""}password`
+  );
+}
+
+const passwordToggleButtons = document.querySelectorAll("[data-toggle-target]");
+passwordToggleButtons.forEach((button) => {
+  button.addEventListener("click", () => togglePasswordVisibility(button));
+});
+
 function filterDropdown(selectElement, searchInput) {
   const searchText = (searchInput.value || "").trim().toLowerCase();
 
   Array.from(selectElement.options).forEach((option) => {
     const optionText = (option.textContent || "").toLowerCase();
-    const shouldShow = !searchText || option.value === "" || optionText.includes(searchText);
+    const shouldShow =
+      !searchText || option.value === "" || optionText.includes(searchText);
 
     option.hidden = !shouldShow;
   });
@@ -55,10 +75,10 @@ countrySelect.addEventListener("change", function () {
     stateSelect.innerHTML = '<option value="">Select country first</option>';
 
     stateSelect.disabled = true;
-      stateSearch.value = "";
-      stateSearch.disabled = true;
+    stateSearch.value = "";
+    stateSearch.disabled = true;
 
-      return;
+    return;
   }
 
   // Show loading message
@@ -67,14 +87,13 @@ countrySelect.addEventListener("change", function () {
   stateSelect.disabled = true;
   stateSearch.disabled = false;
   stateSearch.value = "";
+
   // Get states from API
   fetch("https://countriesnow.space/api/v0.1/countries/states", {
     method: "POST",
-
     headers: {
       "Content-Type": "application/json",
     },
-
     body: JSON.stringify({
       country: selectedCountry,
     }),
@@ -103,18 +122,3 @@ countrySelect.addEventListener("change", function () {
       console.log("State API Error:", error);
     });
 });
-
-// Show / Hide Password
-function togglePassword(inputId, button) {
-  const passwordInput = document.getElementById(inputId);
-
-  if (passwordInput.type === "password") {
-    passwordInput.type = "text";
-
-    button.textContent = "Hide";
-  } else {
-    passwordInput.type = "password";
-
-    button.textContent = "Show";
-  }
-}
