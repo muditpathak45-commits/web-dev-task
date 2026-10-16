@@ -115,14 +115,6 @@ body {
     background-color: #f2f2f2;
 }
 
-/* Error Message */
-.error-message {
-    min-height: 14px;
-    color: red;
-    font-size: 12px;
-    margin-top: 3px;
-}
-
 
 /* Remember Me */
 .remember-me {
