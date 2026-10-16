@@ -15,9 +15,9 @@ async function loadCountries() {
             countrySelect.appendChild(option);
         });
     } catch (error) {
-        console.log("Unable to load countries");
     }
 }
+
 
 async function loadStates(country) {
     stateSelect.innerHTML = '<option value="">Select State</option>';
