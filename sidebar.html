@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Navigation</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Arial, sans-serif;
+        background: #f3f5f8;
+        color: #212529;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      .layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      aside {
+        box-sizing: border-box;
+        width: 280px;
+        padding: 1.5rem 1rem;
+        background: #212529;
+        color: #fff;
+      }
+
+      h1 {
+        margin: 0 0 1.5rem;
+        font-size: 1.4rem;
+      }
+
+      h2 {
+        margin: 1.5rem 0 0.5rem;
+        color: #adb5bd;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      nav {
+        display: grid;
+        gap: 0.25rem;
+      }
+
+      a {
+        display: block;
+        padding: 0.65rem 0.75rem;
+        border-radius: 0.4rem;
+        color: #f8f9fa;
+        text-decoration: none;
+      }
+
+      a:hover,
+      a:focus-visible {
+        background: #343a40;
+        outline: none;
+      }
+
+      main {
+        padding: 2rem;
+      }
+
+      @media (max-width: 560px) {
+        .layout {
+          display: block;
+        }
+
+        aside {
+          width: 100%;
+        }
+
+        main {
+          padding: 1.5rem 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <aside aria-label="Task navigation">
+        <h1>Web Development Tasks</h1>
+        <nav aria-label="Pages">
+          <a href="index.html">Dashboard</a>
+
+          <h2>Day 1</h2>
+          <a href="day1/Registration.html">Registration</a>
+          <a href="day1/Login.html">Login</a>
+
+          <h2>Day 2</h2>
+          <a href="day2/RegistrationValidation.html">Registration Validation</a>
+          <a href="day2/Loginvalidation.html">Login Validation</a>
+
+          <h2>Day 3</h2>
+          <a href="day3/User.html">User Management</a>
+        </nav>
+      </aside>
+      <main>
+        <h2>Choose a page</h2>
+        <p>Use the navigation menu to open any task page.</p>
+      </main>
+    </div>
+  </body>
+</html>

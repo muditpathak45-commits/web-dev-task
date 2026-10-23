@@ -95,7 +95,7 @@ form.addEventListener("submit", function (event) {
     }
 
     if (isEmailValid && isPasswordValid && isRememberChecked) {
-        window.location.href = "../RegistrationValidationDay02/RegistrationValidation.html";
+        window.location.href = "RegistrationValidation.html";
     } else {
         statusMessage.textContent = "";
     }
