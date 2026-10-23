@@ -1,0 +1,28 @@
+body {
+    background-color: #f5f6f8;
+}
+
+.edit-btn,
+.delete-btn {
+    margin-right: 5px;
+}
+
+#searchUser {
+    max-width: 500px;
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+table {
+    margin-bottom: 0;
+}
+
+@media (max-width: 576px) {
+
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

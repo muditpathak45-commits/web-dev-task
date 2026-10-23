@@ -1,26 +1,22 @@
-/* Remove default spacing */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body */
 body {
     font-family: Arial, sans-serif;
     min-height: 100vh;
     min-height: 100svh;
 }
 
-/* Top Heading */
 .page-title {
     font-size: 36px;
     color: #2d2d32;
     margin: 25px 7%;
 }
 
-
-/* Main Login Section */
 .login-section {
     width: 100%;
     min-height: 100vh;
@@ -32,8 +28,6 @@ body {
     padding: 24px;
 }
 
-
-/* Login Card */
 .login-card {
     width: min(100%, 400px);
     background-color: white;
@@ -42,8 +36,6 @@ body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
-
-/* Login Heading */
 .login-card h2 {
     text-align: center;
     color: #20203d;
@@ -51,8 +43,6 @@ body {
     margin-bottom: 18px;
 }
 
-
-/* Form Group */
 .form-group {
     margin-bottom: 12px;
 }
@@ -71,8 +61,6 @@ body {
     text-align: center;
 }
 
-
-/* Labels */
 .form-group label {
     display: block;
     font-size: clamp(15px, 1.2vw, 15px);
@@ -80,8 +68,6 @@ body {
     margin-bottom: 9px;
 }
 
-      
-/* Email and Password Input */
 .form-group input[type="email"],
 .form-group input[type="password"] {
     width: 100%;
@@ -93,26 +79,22 @@ body {
     font-size: clamp(13px, 1.2vw, 16px);
 }
 
-/* Input Focus */
 .form-group input[type="email"]:focus,
 .form-group input[type="password"]:focus {
     border-color: #5145cd;
     box-shadow: 0 0 4px rgba(81, 69, 205, 0.25);
 }
 
-/* Password Row */
 .password-row {
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-/* Password Input */
 .password-row input {
     flex: 1;
 }
 
-/* Show Button */
 .show-button {
     height: 27px;
     padding: 0 9px;
@@ -124,13 +106,10 @@ body {
     cursor: pointer;
 }
 
-/* Show Button Hover */
 .show-button:hover {
     background-color: #f2f2f2;
 }
 
-
-/* Remember Me */
 .remember-me {
     display: flex;
     flex-direction: column;
@@ -146,14 +125,12 @@ body {
     font-size: 13px;
 }
 
-
 .remember-me input {
     width: 15px;
     height: 15px;
     margin: 0;
     cursor: pointer;
 }
-
 
 .remember-me label {
     font-size: clamp(12px, 1.1vw, 14px);
@@ -162,8 +139,6 @@ body {
     margin-bottom: 4px;
 }
 
-
-/* Login Button */
 .login-button {
     width: 100%;
     height: clamp(40px, 4vw, 52px);
@@ -182,27 +157,21 @@ body {
     transition: 0.3s;
 }
 
-
-/* Login Button Hover */
 .login-button:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 10px rgba(63, 50, 180, 0.3);
 }
 
-/* Login Button Focus */
 .login-button:focus {
     outline: 3px solid rgba(81, 69, 205, 0.25);
 }
 
-/* Bottom Links */
 .bottom-links {
     display: flex;
     justify-content: space-between;
     margin-top: 18px;
 }
 
-
-/* Links */
 .bottom-links a {
     color: #392b78;
     text-decoration: none;
@@ -210,13 +179,10 @@ body {
     font-weight: bold;
 }
 
-/* Link Hover */
 .bottom-links a:hover {
     text-decoration: underline;
 }
 
-
-/* Mobile Responsive */
 @media (max-width: 600px) {
     .page-title {
         font-size: 30px;
