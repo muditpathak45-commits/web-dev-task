@@ -18,92 +18,109 @@
       </div>
     </header>
 
-    <main class="dashboard">
-      <section class="intro" aria-labelledby="dashboard-title">
-        <h1 id="dashboard-title">Coding Tasks Dashboard</h1>
-        <p>Choose a day and open any task to get started.</p>
-      </section>
+    <div class="dashboard-layout">
+      <aside class="dashboard-sidebar" aria-label="Task navigation">
+        <h2>Pages</h2>
+        <nav aria-label="Task pages">
+          <a href="index.html" aria-current="page">Dashboard</a>
+          <h3>Day 1</h3>
+          <a href="day1/Registration.html">Registration</a>
+          <a href="day1/Login.html">Login</a>
+          <h3>Day 2</h3>
+          <a href="day2/RegistrationValidation.html">Registration Validation</a>
+          <a href="day2/Loginvalidation.html">Login Validation</a>
+          <h3>Day 3</h3>
+          <a href="day3/User.html">User Management</a>
+        </nav>
+      </aside>
 
-      <section class="day-section" aria-labelledby="day-1-title">
-        <div class="day-heading">
-          <span class="day-number" aria-hidden="true">01</span>
-          <div>
-            <p class="eyebrow">Foundations</p>
-            <h2 id="day-1-title">Day 1</h2>
-          </div>
-        </div>
-        <div class="task-grid">
-          <article class="task-card">
-            <p class="task-type">Forms</p>
-            <h3>User Registration</h3>
-            <p>Create a profile with contact details and country selection.</p>
-            <a class="task-link" href="day1/Registration.html" data-task>
-              Open registration <span aria-hidden="true">→</span>
-            </a>
-          </article>
-          <article class="task-card">
-            <p class="task-type">Forms</p>
-            <h3>User Login</h3>
-            <p>View the matching login page for the Day 1 registration task.</p>
-            <a class="task-link" href="day1/Login.html" data-task>
-              Open login <span aria-hidden="true">→</span>
-            </a>
-          </article>
-        </div>
-      </section>
+      <main class="dashboard">
+        <section class="intro" aria-labelledby="dashboard-title">
+          <h1 id="dashboard-title">Coding Tasks Dashboard</h1>
+          <p>Choose a day and open any task to get started.</p>
+        </section>
 
-      <section class="day-section" aria-labelledby="day-2-title">
-        <div class="day-heading">
-          <span class="day-number" aria-hidden="true">02</span>
-          <div>
-            <p class="eyebrow">Validation</p>
-            <h2 id="day-2-title">Day 2</h2>
+        <section class="day-section" aria-labelledby="day-1-title">
+          <div class="day-heading">
+            <span class="day-number" aria-hidden="true">01</span>
+            <div>
+              <p class="eyebrow">Foundations</p>
+              <h2 id="day-1-title">Day 1</h2>
+            </div>
           </div>
-        </div>
-        <div class="task-grid">
-          <article class="task-card">
-            <p class="task-type">Form validation</p>
-            <h3>Registration Validation</h3>
-            <p>Try the validated registration form and its required fields.</p>
-            <a
-              class="task-link"
-              href="day2/RegistrationValidation.html"
-              data-task
-            >
-              Open registration validation <span aria-hidden="true">→</span>
-            </a>
-          </article>
-          <article class="task-card">
-            <p class="task-type">Form validation</p>
-            <h3>Login Validation</h3>
-            <p>Try the login form with its email and password checks.</p>
-            <a class="task-link" href="day2/Loginvalidation.html" data-task>
-              Open login validation <span aria-hidden="true">→</span>
-            </a>
-          </article>
-        </div>
-      </section>
+          <div class="task-grid">
+            <article class="task-card">
+              <p class="task-type">Forms</p>
+              <h3>User Registration</h3>
+              <p>Create a profile with contact details and country selection.</p>
+              <a class="task-link" href="day1/Registration.html" data-task>
+                Open registration <span aria-hidden="true">→</span>
+              </a>
+            </article>
+            <article class="task-card">
+              <p class="task-type">Forms</p>
+              <h3>User Login</h3>
+              <p>View the matching login page for the Day 1 registration task.</p>
+              <a class="task-link" href="day1/Login.html" data-task>
+                Open login <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </section>
 
-      <section class="day-section" aria-labelledby="day-3-title">
-        <div class="day-heading">
-          <span class="day-number" aria-hidden="true">03</span>
-          <div>
-            <p class="eyebrow">Working with data</p>
-            <h2 id="day-3-title">Day 3</h2>
+        <section class="day-section" aria-labelledby="day-2-title">
+          <div class="day-heading">
+            <span class="day-number" aria-hidden="true">02</span>
+            <div>
+              <p class="eyebrow">Validation</p>
+              <h2 id="day-2-title">Day 2</h2>
+            </div>
           </div>
-        </div>
-        <div class="task-grid">
-          <article class="task-card">
-            <p class="task-type">User management</p>
-            <h3>Manage Users</h3>
-            <p>Search, edit, and remove users from the sample user list.</p>
-            <a class="task-link" href="day3/User.html" data-task>
-              Open user management <span aria-hidden="true">→</span>
-            </a>
-          </article>
-        </div>
-      </section>
-    </main>
+          <div class="task-grid">
+            <article class="task-card">
+              <p class="task-type">Form validation</p>
+              <h3>Registration Validation</h3>
+              <p>Try the validated registration form and its required fields.</p>
+              <a
+                class="task-link"
+                href="day2/RegistrationValidation.html"
+                data-task
+              >
+                Open registration validation <span aria-hidden="true">→</span>
+              </a>
+            </article>
+            <article class="task-card">
+              <p class="task-type">Form validation</p>
+              <h3>Login Validation</h3>
+              <p>Try the login form with its email and password checks.</p>
+              <a class="task-link" href="day2/Loginvalidation.html" data-task>
+                Open login validation <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="day-section" aria-labelledby="day-3-title">
+          <div class="day-heading">
+            <span class="day-number" aria-hidden="true">03</span>
+            <div>
+              <p class="eyebrow">Working with data</p>
+              <h2 id="day-3-title">Day 3</h2>
+            </div>
+          </div>
+          <div class="task-grid">
+            <article class="task-card">
+              <p class="task-type">User management</p>
+              <h3>Manage Users</h3>
+              <p>Search, edit, and remove users from the sample user list.</p>
+              <a class="task-link" href="day3/User.html" data-task>
+                Open user management <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
 
     <footer class="page-footer">
       <div class="footer-content">
