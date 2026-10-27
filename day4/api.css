@@ -1,0 +1,66 @@
+body{
+    background: #f2f2f2;
+}
+
+.container{
+    max-width: 1000px;
+}
+
+h1{
+    font-weight: 700;
+}
+
+.table{
+    background: white;
+}
+
+#loadingMessage,
+#errorMessage,
+#emptyMessage{
+    margin-top:20px;
+}
+
+.pagination{
+    margin-top: 20px;
+}
+
+.page-link{
+    cursor:pointer;
+}
+/* Column headings */
+.table thead th:nth-child(1) {
+    background-color: #220654  !important; /* Name */
+    color: white;
+}
+
+.table thead th:nth-child(2) {
+    background-color: #220654 !important; /* Email */
+    color: white;
+}
+
+.table thead th:nth-child(3) {
+    background-color: #220654  !important; /* Status */
+    color: white;
+}
+
+.table tbody td:nth-child(1) {
+    background-color: #ecf7f9;
+}
+
+.table tbody td:nth-child(2) {
+    background-color: #ecf7f9;
+}
+
+.table tbody td:nth-child(3) {
+    background-color: #ecf7f9;
+}
+
+#userTableBody .badge.bg-success {
+    background-color: #220654  !important;
+    color: white;
+}
+
+#userTableBody .badge.bg-secondary {
+    background-color: #d31414 !important;
+    color: white;
+}
