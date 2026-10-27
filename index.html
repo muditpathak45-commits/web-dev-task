@@ -30,6 +30,8 @@
           <a href="day2/Loginvalidation.html">Login Validation</a>
           <h3>Day 3</h3>
           <a href="day3/User.html">User Management</a>
+          <h3>Day 4</h3>
+          <a href="day4/api.html">API Integration</a>
         </nav>
       </aside>
 
@@ -118,6 +120,26 @@
             </article>
           </div>
         </section>
+
+        <section class="day-section" aria-labelledby="day-4-title">
+          <div class="day-heading">
+            <span class="day-number" aria-hidden="true">04</span>
+            <div>
+              <p class="eyebrow">API data</p>
+              <h2 id="day-4-title">Day 4</h2>
+            </div>
+          </div>
+          <div class="task-grid">
+            <article class="task-card">
+              <p class="task-type">API integration</p>
+              <h3>Users API</h3>
+              <p>Fetch users from an API, then filter, sort, and browse them with pagination.</p>
+              <a class="task-link" href="day4/api.html" data-task>
+                Open API integration <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </section>
       </main>
     </div>
 
@@ -140,5 +162,22 @@
       </div>
       <p class="copyright">Web Development Tasks</p>
     </footer>
+    <script>
+      const taskSelect = document.getElementById("taskSelect");
+      const openTaskButton = document.getElementById("openTaskBtn");
+
+      document.querySelectorAll("a[data-task]").forEach((taskLink) => {
+        const option = document.createElement("option");
+        option.value = taskLink.href;
+        option.textContent = taskLink.textContent.trim().replace("→", "").trim();
+        taskSelect.appendChild(option);
+      });
+
+      openTaskButton.addEventListener("click", () => {
+        if (taskSelect.value) {
+          window.location.href = taskSelect.value;
+        }
+      });
+    </script>
   </body>
 </html>
