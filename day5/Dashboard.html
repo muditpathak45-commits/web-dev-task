@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employees Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="Dashboard.css" />
+    <link rel="stylesheet" href="../index.css" />
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="mb-3">
+            <label for="searchInput" class="form-label">Search Employee</label>
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by name or email" />
+        </div>
+
+        <h1 class="mb-4">Employees Dashboard</h1>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card dashboard-card blue p-3">
+                    <h6>Total Employees</h6>
+                    <h2 id="totalEmployees">0</h2>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card dashboard-card pink p-3">
+                    <h6>Active Employees</h6>
+                    <h2 id="activeEmployees">0</h2>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card dashboard-card blue p-3">
+                    <h6>Active Projects</h6>
+                    <h2 id="activeProjects">0</h2>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card dashboard-card pink p-3">
+                    <h6>Unassigned Employees</h6>
+                    <h2 id="unassignedEmployees">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <h2>Employee management</h2>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-4">
+                <label class="form-label">Department</label>
+                <select id="departmentFilter" class="form-select">
+                    <option value="All">All</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Finance">Finance</option>
+                    <option value="HR">HR</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Status</label>
+                <select id="statusFilter" class="form-select">
+                    <option value="All">All</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Project Status</label>
+                <select id="projectStatusFilter" class="form-select">
+                    <option value="All">All</option>
+                    <option value="Active">Active</option>
+                    <option value="Completed">Completed</option>
+                    <option value="In Progress">In Progress</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Sort By</label>
+            <select id="sortFilter" class="form-select">
+                <option value="none">None</option>
+                <option value="nameAsc">Employee Name ↑</option>
+                <option value="nameDesc">Employee Name ↓</option>
+                <option value="projectsAsc">Number of Projects ↑</option>
+                <option value="projectsDesc">Number of Projects ↓</option>
+                <option value="joiningAsc">Joining Date ↑</option>
+                <option value="joiningDesc">Joining Date ↓</option>
+                <option value="statusAsc">Status ↑</option>
+                <option value="statusDesc">Status ↓</option>
+            </select>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Projects</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="Dashboard.js"></script>
+    <script src="../task-navigation.js"></script>
+</body>
+</html>

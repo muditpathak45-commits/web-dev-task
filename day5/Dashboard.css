@@ -1,0 +1,44 @@
+﻿body {
+    background: #f2f2f2;
+    font-family: Arial, sans-serif;
+}
+
+.dashboard-card {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    min-height: 80px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-card.blue {
+    background-color: #4e1373;
+}
+
+.dashboard-card.pink {
+    background-color: #e8555a;
+}
+
+.table thead th {
+    background-color: #e5e5e5;
+    color: #111;
+}
+
+.table tbody td {
+    background-color: #f3f3f3;
+}
+
+.table tbody tr:hover td {
+    background-color: #ececec;
+}
+
+@media (max-width: 760px) {
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard {
+        width: 100%;
+    }
+}
