@@ -1,7 +1,8 @@
 const API_URLS = [
-    "https://dummyjson.com/users?limit=30&select=id,firstName,lastName,email",
+    "https://dummyjson.com/users?limit=50&select=id,firstName,lastName,email",
     "https://jsonplaceholder.typicode.com/users"
 ];
+
 let users = [];
 let currentPage = 1;
 const usersPerPage = 10;
@@ -19,62 +20,85 @@ const statusFilter = document.getElementById("statusFilter");
 const sortBy = document.getElementById("sortBy");
 const searchInput = document.getElementById("searchInput");
 
-async function fetchUsers() {
-    loadingMessage.classList.remove("d-none");
+function normalizeUsers(rawUsers) {
+    return rawUsers.map(function (user, index) {
+        const fullName = user.name || `${user.firstName || ""} ${user.lastName || ""}`.trim() || `User ${index + 1}`;
+        return {
+            id: user.id,
+            name: fullName,
+            email: user.email || "N/A",
+            // API mein status nahi hota, isliye alternate Active/Inactive
+            status: index % 2 === 0 ? "Active" : "Inactive"
+        };
+    });
+}
+
+function hideAllResults() {
     errorMessage.classList.add("d-none");
     emptyMessage.classList.add("d-none");
     tableContainer.classList.add("d-none");
     paginationContainer.classList.add("d-none");
     paginationContainer.classList.remove("d-flex");
+}
 
-    let lastError = null;
+async function fetchUsers() {
+    // Loading state
+    hideAllResults();
+    loadingMessage.classList.remove("d-none");
 
-    try {
-        for (const apiUrl of API_URLS) {
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}`);
-                }
+    let loadedUsers = null;
 
-                const data = await response.json();
-                const userList = Array.isArray(data)
-                    ? data
-                    : data && Array.isArray(data.users)
-                        ? data.users
-                        : null;
+    for (const apiUrl of API_URLS) {
+        try {
+            const response = await fetch(apiUrl, {
+                method: "GET",
+                headers: { Accept: "application/json" }
+            });
 
-                if (!userList) {
-                    throw new Error("API response did not contain a user list");
-                }
-
-                users = userList.map(function (user, index) {
-                    const fullName = user.name || `${user.firstName || ""} ${user.lastName || ""}`.trim();
-                    return {
-                        id: user.id,
-                        name: fullName || `User ${index + 1}`,
-                        email: user.email,
-                        status: index % 2 === 0 ? "Active" : "Inactive"
-                    };
-                });
-
-                currentPage = 1;
-                processUsers();
-                return;
-            } catch (error) {
-                lastError = error;
-                console.error(`Unable to load users from ${apiUrl}:`, error);
+            if (!response.ok) {
+                throw new Error(`API request failed with status ${response.status}`);
             }
-        }
 
-        console.error("Unable to load users:", lastError);
-        errorMessage.classList.remove("d-none");
-    } finally {
-        loadingMessage.classList.add("d-none");
+            const data = await response.json();
+            const userList = Array.isArray(data)
+                ? data
+                : data && Array.isArray(data.users)
+                    ? data.users
+                    : null;
+
+            if (!userList || !userList.length) {
+                throw new Error("API response did not contain any users");
+            }
+
+            loadedUsers = normalizeUsers(userList);
+            break; // success, doosri API try karne ki zaroorat nahi
+        } catch (error) {
+            console.error(`Unable to load users from ${apiUrl}:`, error);
+        }
     }
+
+    // Loading hamesha band hogi
+    loadingMessage.classList.add("d-none");
+
+    // Error state (Retry button errorMessage ke andar hai)
+    if (!loadedUsers) {
+        users = [];
+        errorMessage.classList.remove("d-none");
+        return;
+    }
+
+    // Success state
+    users = loadedUsers;
+    currentPage = 1;
+    processUsers();
 }
 
 function processUsers() {
+    // Data aane se pehle (loading/error ke time) kuch render mat karo
+    if (!users.length) {
+        return;
+    }
+
     let processedUsers = [...users];
     const selectedStatus = statusFilter.value;
     const searchTerm = searchInput.value.trim().toLowerCase();
@@ -102,6 +126,7 @@ function processUsers() {
             return b.name.localeCompare(a.name);
         });
     } else if (selectedSort === "newest") {
+        // API mein date nahi hoti, isliye bada id = newest
         processedUsers.sort(function (a, b) {
             return b.id - a.id;
         });
@@ -111,6 +136,7 @@ function processUsers() {
         });
     }
 
+    // Empty state
     if (processedUsers.length === 0) {
         tableContainer.classList.add("d-none");
         paginationContainer.classList.add("d-none");
@@ -174,11 +200,7 @@ function createPagination(totalPages, filteredCount) {
     });
     pagination.appendChild(previousItem);
 
-    const pageNumbers = Array.from({ length: totalPages }, function (_, index) {
-        return index + 1;
-    });
-
-    pageNumbers.forEach(function (pageNumber) {
+    for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
         const pageItem = document.createElement("li");
         pageItem.className = `page-item ${pageNumber === currentPage ? "active" : ""}`;
         pageItem.innerHTML = `
@@ -186,7 +208,7 @@ function createPagination(totalPages, filteredCount) {
                 class="page-link"
                 type="button"
                 aria-label="Page ${pageNumber}"
-                ${pageNumber === currentPage ? "aria-current=\"page\"" : ""}
+                ${pageNumber === currentPage ? 'aria-current="page"' : ""}
             >
                 ${pageNumber}
             </button>
@@ -196,7 +218,7 @@ function createPagination(totalPages, filteredCount) {
             processUsers();
         });
         pagination.appendChild(pageItem);
-    });
+    }
 
     const nextItem = document.createElement("li");
     nextItem.className = `page-item ${currentPage === totalPages ? "disabled" : ""}`;
