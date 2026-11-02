@@ -99,16 +99,23 @@ function renderTaskNavigation() {
 
   header.querySelector(".workspace-brand").after(menuButton);
 
+  const setSidebarState = (isExpanded) => {
+    sidebar.classList.toggle("sidebar-open", isExpanded);
+    sidebar.classList.toggle("is-expanded", isExpanded);
+    sidebar.classList.toggle("is-collapsed", !isExpanded);
+    menuButton.setAttribute("aria-expanded", String(isExpanded));
+  };
+
   menuButton.addEventListener("click", () => {
-    const isOpen = sidebar.classList.toggle("sidebar-open");
-    menuButton.setAttribute("aria-expanded", String(isOpen));
+    setSidebarState(!sidebar.classList.contains("sidebar-open"));
   });
 
   // Close the mobile sidebar after choosing a task.
   sidebar.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
-      sidebar.classList.remove("sidebar-open");
-      menuButton.setAttribute("aria-expanded", "false");
+      if (window.innerWidth <= 650) {
+        setSidebarState(false);
+      }
     });
   });
 }

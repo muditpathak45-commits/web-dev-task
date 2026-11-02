@@ -9,6 +9,7 @@
     />
     <title>Web Development Tasks</title>
     <link rel="stylesheet" href="index.css" />
+    
   </head>
   <body>
     <header class="site-header">
@@ -17,21 +18,27 @@
       </div>
     </header>
 
-    <div class="dashboard-layout">
+    <div class="dashboard-layout" id="dashboardLayout">
       <aside class="dashboard-sidebar" aria-label="Task navigation">
+        <button class="dashboard-toggle" type="button" aria-label="Toggle sidebar" aria-expanded="true" >
+          ☰
+        </button>
         <h2>Pages</h2>
         <nav aria-label="Task pages">
-          <a class="nav-home" href="index.html" aria-current="page">Dashboard</a>
+          <a class="nav-home" href="index.html" aria-current="page"><span class="nav-text">Dashboard</span></a>
           <h3>Day 1</h3>
-          <a class="nav-alert" href="day1/Registration.html">Registration</a>
-          <a class="nav-briefcase" href="day1/Login.html">Login</a>
+          <a class="nav-alert" href="day1/Registration.html"><span class="nav-text">Registration</span></a>
+          <a class="nav-briefcase" href="day1/Login.html"><span class="nav-text">Login</span></a>
           <h3>Day 2</h3>
-          <a class="nav-map" href="day2/RegistrationValidation.html">Registration Validation</a>
-          <a class="nav-folder" href="day2/Loginvalidation.html">Login Validation</a>
+          <a class="nav-map" href="day2/RegistrationValidation.html"><span class="nav-text">Registration V.</span></a>
+          <a class="nav-folder" href="day2/Loginvalidation.html"><span class="nav-text">Login V.</span></a>
           <h3>Day 3</h3>
-          <a class="nav-chart" href="day3/User.html">User Management</a>
+          <a class="nav-chart" href="day3/User.html"><span class="nav-text">User Man.</span></a>
           <h3>Day 4</h3>
-          <a class="nav-db" href="day4/api.html">API Integration</a>
+          <a class="nav-db" href="day4/api.html"><span class="nav-text">API Int.</span></a>
+          <h3>Day 5</h3>
+          <a class="nav-db" href="day5/Dashboard.html"><span class="nav-text">Dashboard</span></a>
+          
         </nav>
       </aside>
 
@@ -140,6 +147,26 @@
             </article>
           </div>
         </section>
+
+         <section class="day-section" aria-labelledby="day-5-title">
+          <div class="day-heading">
+            <span class="day-number" aria-hidden="true">05</span>
+            <div>
+              <p class="eyebrow">Dashboard</p>
+              <h2 id="day-4-title">Day 05</h2>
+            </div>
+          </div>
+          <div class="task-grid">
+            <article class="task-card">
+              <p class="task-type">Dashboard</p>
+              <h3>Dashboard</h3>
+              <p>Create a responsive dashboard</p>
+              <a class="task-link" href="day5/Dashboard.html" data-task>
+                Open Dashboard <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </section>
       </main>
     </div>
 
@@ -165,6 +192,22 @@
     <script>
       const taskSelect = document.getElementById("taskSelect");
       const openTaskButton = document.getElementById("openTaskBtn");
+      const dashboardLayout = document.getElementById("dashboardLayout");
+      const dashboardSidebar = document.querySelector(".dashboard-sidebar");
+      const dashboardToggle = document.querySelector(".dashboard-toggle");
+
+      const setDashboardSidebarState = (isExpanded) => {
+        dashboardLayout.classList.toggle("sidebar-collapsed", !isExpanded);
+        dashboardSidebar.classList.toggle("is-collapsed", !isExpanded);
+        dashboardToggle.setAttribute("aria-expanded", String(isExpanded));
+      };
+
+      if (dashboardToggle && dashboardLayout && dashboardSidebar) {
+        dashboardToggle.addEventListener("click", () => {
+          const isExpanded = dashboardToggle.getAttribute("aria-expanded") === "true";
+          setDashboardSidebarState(!isExpanded);
+        });
+      }
 
       document.querySelectorAll("a[data-task]").forEach((taskLink) => {
         const option = document.createElement("option");

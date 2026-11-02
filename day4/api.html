@@ -22,7 +22,20 @@
         </div>
 
         <div class="row g-3 mb-4">
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <label for="searchInput" class="form-label">
+                    Search
+                </label>
+                <input
+                    id="searchInput"
+                    type="search"
+                    class="form-control"
+                    placeholder="Search by name or email"
+                    aria-label="Search users"
+                >
+            </div>
+
+            <div class="col-md-4">
                 <label for="statusFilter" class="form-label">
                     Status
                 </label>
@@ -40,7 +53,7 @@
                 </select>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="sortBy" class="form-label">
                     Sort By
                 </label>
@@ -66,7 +79,7 @@
         </div>
 
         <div id="loadingMessage" class="alert-info">
-            Loading users.....
+            Loading users...
         </div>
 
         <div id="errorMessage" class="alert-danger d-none">

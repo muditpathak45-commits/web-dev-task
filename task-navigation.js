@@ -3,17 +3,22 @@
     return;
   }
 
+  const existingNav = document.querySelector('.task-nav-header, .task-nav-sidebar, .workspace-header, .workspace-sidebar');
+  if (existingNav) {
+    return;
+  }
+
   window.__taskNavigationLoaded = true;
 
   const pages = [
-    { label: 'Dashboard', href: 'index.html' },
-    { label: 'Day 1 Registration', href: 'day1/Registration.html' },
-    { label: 'Day 1 Login', href: 'day1/Login.html' },
-    { label: 'Day 2 Registration', href: 'day2/RegistrationValidation.html' },
-    { label: 'Day 2 Login', href: 'day2/Loginvalidation.html' },
-    { label: 'Day 3 User Management', href: 'day3/User.html' },
-    { label: 'Day 4 API Integration', href: 'day4/api.html' },
-    { label: 'Day 5 Dashboard', href: 'day5/Dashboard.html' }
+    { label: 'Dashboard', href: 'index.html' ,icon: '🏠' },
+    { label: 'Day 1 Registration', href: 'day1/Registration.html', icon: '📝' },
+    { label: 'Day 1 Login', href: 'day1/Login.html',icon: '🔐'  },
+    { label: 'Day 2 Registration', href: 'day2/RegistrationValidation.html', icon:'📋'},
+    { label: 'Day 2 Login', href: 'day2/Loginvalidation.html', icon: '🔑'},
+    { label: 'Day 3 User Management', href: 'day3/User.html' , icon: '👤' },
+    { label: 'Day 4 API Integration', href: 'day4/api.html', icon:'🔗'},
+    { label: 'Day 5 Dashboard', href: 'day5/Dashboard.html', icon: '📊'}
   ];
 
   const currentUrl = new URL(window.location.href);
@@ -30,7 +35,7 @@
     return;
   }
 
-  if (document.querySelector('.task-nav-header') || document.querySelector('.task-nav-sidebar')) {
+  if (document.querySelector('.workspace-header') || document.querySelector('.workspace-sidebar') || document.querySelector('.task-nav-header') || document.querySelector('.task-nav-sidebar')) {
     return;
   }
 
@@ -52,7 +57,7 @@
   header.innerHTML = `
     <div class="task-nav-header-left">
       <div class="task-nav-logo">
-      <img src="https://jeebly.com/wp-content/uploads/2022/01/og-image-2.jpg" alt="Logo">
+        <img src="https://jeebly.com/wp-content/uploads/2022/01/og-image-2.jpg" alt="Logo">
       </div>
     </div>
     <div class="task-nav-header-center">
@@ -100,9 +105,9 @@
       link.setAttribute('aria-current', 'page');
     }
     link.innerHTML = `
-      <span class="task-nav-icon" aria-hidden="true"></span>
-      <span class="task-nav-label">${page.label}</span>
-    `;
+  <span class="task-nav-icon" aria-hidden="true">${page.icon}</span>
+  <span class="task-nav-label">${page.label}</span>
+`;
     navList.appendChild(link);
   });
 
@@ -130,7 +135,12 @@
     <div class="task-nav-footer-inner">
       <div class="task-nav-footer-brand">
         <div>
-          <div class="task-nav-footer-title"></div>
+          <div class="task-nav-footer-title">All rights reserved © 2026 Jeebly LLC
+</div>
+<div class "task-nav-footer">Facility # 1 & 3, Plot # 368-212,
+Al Quoz Industrial Area - 3, Dubai,
+United Arab Emirates.
+Monday to Saturday 9 AM to 5:30 PM
         </div>
       </div>
 
@@ -145,7 +155,7 @@
   layout.appendChild(mainContent);
 
   document.body.innerHTML = '';
-  document.body.classList.add('task-nav-body');
+  document.body.classList.add('task-nav-body', 'task-page');
   document.body.appendChild(header);
   document.body.appendChild(layout);
   document.body.appendChild(footer);

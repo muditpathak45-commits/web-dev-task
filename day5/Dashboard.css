@@ -3,42 +3,172 @@
     font-family: Arial, sans-serif;
 }
 
-.dashboard-card {
-    color: white;
+.dashboard-page {
+    min-height: 100vh;
+}
+
+.dashboard-header {
+    background: #163758;
+    color: #ffffff;
+    padding: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 2.1rem;
+    font-weight: 700;
+}
+
+.card-panel {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+}
+
+.stat-grid .stat-card {
+    border-radius: 12px;
+    padding: 20px 18px;
+    color: #fff;
+    height: 100%;
+    min-height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stat-blue {
+    background: #163758;
+}
+
+.stat-pink {
+    background: #DC1D47;
+}
+
+.stat-card span {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.stat-card h2 {
+    margin: 8px 0 0;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.toolbar {
+    padding: 18px 20px;
+}
+
+.add-btn {
+    background: #163758;
     border: none;
-    border-radius: 5px;
-    padding: 15px;
-    min-height: 80px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 0.75rem 1.25rem;
+    font-weight: 600;
 }
 
-.dashboard-card.blue {
-    background-color: #4e1373;
-}
-
-.dashboard-card.pink {
-    background-color: #e8555a;
+.table-panel {
+    padding: 18px;
 }
 
 .table thead th {
-    background-color: #e5e5e5;
-    color: #111;
+    background-color: #163758;
+    color: #fff;
+    border-color: #163758;
 }
 
 .table tbody td {
-    background-color: #f3f3f3;
+    background-color: #f9f9f9;
 }
 
 .table tbody tr:hover td {
-    background-color: #ececec;
+    background-color: #f1f3f5;
 }
 
-@media (max-width: 760px) {
-    .dashboard-layout {
-        grid-template-columns: 1fr;
+.active-badge {
+    background-color: #163758;
+    color: #fff;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+}
+
+.inactive-badge {
+    background-color: #DC1D47;
+    color: white;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+}
+
+.view-btn {
+    background-color: #163758;
+    color: #fff;
+    border-color: #163758;
+}
+
+.edit-btn {
+    background-color: #f4a300;
+    color: #fff;
+    border-color: #f4a300;
+}
+
+.delete-btn {
+    background-color: #DC1D47;
+    color: #fff;
+    border-color: #DC1D47;
+}
+
+.page-size-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #163758;
+}
+
+.pagination-wrap {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pagination-info {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #4f5f74;
+}
+
+.modal {
+    display: none;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.modal.show {
+    display: block;
+}
+
+.modal-dialog {
+    margin-top: 80px;
+}
+
+.project-row {
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    .dashboard-header h1 {
+        font-size: 1.7rem;
     }
 
-    .dashboard {
-        width: 100%;
+    .table-panel {
+        padding: 12px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table {
+        min-width: 700px;
     }
 }

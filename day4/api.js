@@ -1,7 +1,10 @@
-const API_URL = "https://jsonplaceholder.typicode.com/users";
+const API_URLS = [
+    "https://dummyjson.com/users?limit=30&select=id,firstName,lastName,email",
+    "https://jsonplaceholder.typicode.com/users"
+];
 let users = [];
-let currentPage = 2;
-const usersPerPage = 4;
+let currentPage = 1;
+const usersPerPage = 10;
 
 const userTableBody = document.getElementById("userTableBody");
 const loadingMessage = document.getElementById("loadingMessage");
@@ -10,9 +13,11 @@ const retryButton = document.getElementById("retryButton");
 const emptyMessage = document.getElementById("emptyMessage");
 const tableContainer = document.getElementById("tableContainer");
 const paginationContainer = document.getElementById("paginationContainer");
+const paginationInfo = document.getElementById("paginationInfo");
 const pagination = document.getElementById("pagination");
 const statusFilter = document.getElementById("statusFilter");
 const sortBy = document.getElementById("sortBy");
+const searchInput = document.getElementById("searchInput");
 
 async function fetchUsers() {
     loadingMessage.classList.remove("d-none");
@@ -22,30 +27,47 @@ async function fetchUsers() {
     paginationContainer.classList.add("d-none");
     paginationContainer.classList.remove("d-flex");
 
+    let lastError = null;
+
     try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-            throw new Error(`API request failed with status ${response.status}`);
+        for (const apiUrl of API_URLS) {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+
+                const data = await response.json();
+                const userList = Array.isArray(data)
+                    ? data
+                    : data && Array.isArray(data.users)
+                        ? data.users
+                        : null;
+
+                if (!userList) {
+                    throw new Error("API response did not contain a user list");
+                }
+
+                users = userList.map(function (user, index) {
+                    const fullName = user.name || `${user.firstName || ""} ${user.lastName || ""}`.trim();
+                    return {
+                        id: user.id,
+                        name: fullName || `User ${index + 1}`,
+                        email: user.email,
+                        status: index % 2 === 0 ? "Active" : "Inactive"
+                    };
+                });
+
+                currentPage = 1;
+                processUsers();
+                return;
+            } catch (error) {
+                lastError = error;
+                console.error(`Unable to load users from ${apiUrl}:`, error);
+            }
         }
 
-        const data = await response.json();
-        if (!Array.isArray(data)) {
-            throw new Error("API response did not contain a user list");
-        }
-
-        users = data.map(function (user, index) {
-            return {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                status: index % 2 === 0 ? "Active" : "Inactive"
-            };
-        });
-
-        currentPage = 1;
-        processUsers();
-    } catch (error) {
-        console.error("Unable to load users:", error);
+        console.error("Unable to load users:", lastError);
         errorMessage.classList.remove("d-none");
     } finally {
         loadingMessage.classList.add("d-none");
@@ -55,10 +77,18 @@ async function fetchUsers() {
 function processUsers() {
     let processedUsers = [...users];
     const selectedStatus = statusFilter.value;
+    const searchTerm = searchInput.value.trim().toLowerCase();
 
     if (selectedStatus !== "All") {
         processedUsers = processedUsers.filter(function (user) {
             return user.status === selectedStatus;
+        });
+    }
+
+    if (searchTerm) {
+        processedUsers = processedUsers.filter(function (user) {
+            return user.name.toLowerCase().includes(searchTerm)
+                || user.email.toLowerCase().includes(searchTerm);
         });
     }
 
@@ -91,13 +121,13 @@ function processUsers() {
 
     emptyMessage.classList.add("d-none");
     const totalPages = Math.ceil(processedUsers.length / usersPerPage);
-    currentPage = Math.min(currentPage, totalPages);
+    currentPage = Math.min(currentPage, totalPages || 1);
 
     const startIndex = (currentPage - 1) * usersPerPage;
     const pageUsers = processedUsers.slice(startIndex, startIndex + usersPerPage);
 
     displayUsers(pageUsers);
-    createPagination(totalPages);
+    createPagination(totalPages, processedUsers.length);
     tableContainer.classList.remove("d-none");
     paginationContainer.classList.remove("d-none");
     paginationContainer.classList.add("d-flex");
@@ -126,8 +156,12 @@ function displayUsers(userList) {
     });
 }
 
-function createPagination(totalPages) {
+function createPagination(totalPages, filteredCount) {
     pagination.innerHTML = "";
+    const startItem = (currentPage - 1) * usersPerPage + 1;
+    const endItem = Math.min(currentPage * usersPerPage, filteredCount);
+
+    paginationInfo.textContent = `Showing ${startItem}-${endItem} of ${filteredCount}`;
 
     const previousItem = document.createElement("li");
     previousItem.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
@@ -140,10 +174,29 @@ function createPagination(totalPages) {
     });
     pagination.appendChild(previousItem);
 
-    const currentPageItem = document.createElement("li");
-    currentPageItem.className = "page-item active";
-    currentPageItem.innerHTML = `<button class="page-link" type="button" aria-current="page">${currentPage}</button>`;
-    pagination.appendChild(currentPageItem);
+    const pageNumbers = Array.from({ length: totalPages }, function (_, index) {
+        return index + 1;
+    });
+
+    pageNumbers.forEach(function (pageNumber) {
+        const pageItem = document.createElement("li");
+        pageItem.className = `page-item ${pageNumber === currentPage ? "active" : ""}`;
+        pageItem.innerHTML = `
+            <button
+                class="page-link"
+                type="button"
+                aria-label="Page ${pageNumber}"
+                ${pageNumber === currentPage ? "aria-current=\"page\"" : ""}
+            >
+                ${pageNumber}
+            </button>
+        `;
+        pageItem.querySelector("button").addEventListener("click", function () {
+            currentPage = pageNumber;
+            processUsers();
+        });
+        pagination.appendChild(pageItem);
+    });
 
     const nextItem = document.createElement("li");
     nextItem.className = `page-item ${currentPage === totalPages ? "disabled" : ""}`;
@@ -163,6 +216,11 @@ statusFilter.addEventListener("change", function () {
 });
 
 sortBy.addEventListener("change", function () {
+    currentPage = 1;
+    processUsers();
+});
+
+searchInput.addEventListener("input", function () {
     currentPage = 1;
     processUsers();
 });

@@ -1,0 +1,168 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f4f6fa;
+    color: #202938;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.app-navbar {
+    background: #163758;
+}
+
+.page-title {
+    color: #163758;
+    font-weight: 700;
+}
+
+/* Dashboard Cards */
+.dashboard-card {
+    min-height: 125px;
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(20, 40, 70, 0.12);
+}
+
+.dashboard-card p {
+    margin: 0 0 12px;
+    font-size: 14px;
+}
+
+.dashboard-card h3 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.dashboard-card.blue {
+    background: #163758;
+}
+
+.dashboard-card.pink {
+    background: #c92d58;
+}
+
+.dashboard-card.purple {
+    background: #6653a6;
+}
+
+.dashboard-card.orange {
+    background: #d8792d;
+}
+
+/* Table */
+.table thead th {
+    background: #163758;
+    color: white;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    background: white;
+}
+
+.table tbody tr:hover td {
+    background: #f1f5fa;
+}
+
+.table {
+    min-width: 760px;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.active-badge {
+    color: #146c43;
+    background: #d1e7dd;
+}
+
+.inactive-badge {
+    color: #842029;
+    background: #f8d7da;
+}
+
+/* Action Buttons */
+.view-btn {
+    color: white;
+    background: #163758;
+    border-color: #163758;
+}
+
+.edit-btn {
+    color: white;
+    background: orange;
+    border-color: orange;
+}
+
+.delete-btn {
+    color: white;
+    background: #c92d58;
+    border-color: #c92d58;
+}
+
+.view-btn:hover,
+.edit-btn:hover,
+.delete-btn:hover {
+    color: white;
+    filter: brightness(0.92);
+}
+
+/* Pagination */
+.page-size {
+    width: 100px;
+}
+
+#paginationButtons button {
+    min-width: 34px;
+}
+
+#previousBtn,
+#nextBtn {
+    min-width: 78px;
+}
+
+#previousBtn:disabled,
+#nextBtn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* View Modal */
+.detail-label {
+    color: #687386;
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.detail-value {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+
+    .dashboard-card {
+        min-height: 105px;
+    }
+
+    .dashboard-card h3 {
+        font-size: 25px;
+    }
+
+    .modal-dialog {
+        margin: 10px;
+    }
+}

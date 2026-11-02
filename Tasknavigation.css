@@ -1,9 +1,9 @@
 
 :root {
-  --navy: #142d4e;
-  --navy-light: #1e426b;
-  --accent: #e80d4f;
-  --accent-light: #fff0f5;
+  --navy: #163758;
+  --navy-light: #163758;
+  --accent: #DC1D47;
+  --accent-light: #DC1D47;
   --page-bg: #f4f7fc;
   --text: #202d40;
   --muted: #78869a;
@@ -34,7 +34,7 @@ body.task-page {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  background: #fff;
+  background: #c51212;
   border-bottom: 1px solid var(--border);
   box-shadow: 0 3px 15px rgba(20, 45, 78, 0.05);
 }
@@ -55,7 +55,7 @@ body.task-page {
   place-items: center;
   flex-shrink: 0;
   border-radius: 13px;
-  background: linear-gradient(135deg, var(--accent), #ff527e);
+  background: linear-gradient(135deg, var(--accent), #DC1D47);
   color: #fff;
   font-size: 21px;
   font-weight: 800;
@@ -101,7 +101,7 @@ body.task-page {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #20b981;
+  background: #DC1D47;
   box-shadow: 0 0 0 4px #e5f8f0;
 }
 
@@ -123,7 +123,7 @@ body.task-page {
   bottom: 0;
   left: 0;
   z-index: 900;
-  width: 240px;
+  width: 180px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -310,7 +310,7 @@ body.task-page .table {
   }
 
   .workspace-sidebar {
-    width: 230px;
+    width: 30px;
   }
 
   .workspace-status {
@@ -372,9 +372,9 @@ body.task-page .table {
   }
 
   .workspace-sidebar {
-    top: 68px;
+    top: 60px;
     bottom: 0;
-    width: min(290px, 86vw);
+    width: min(90px, 86vw);
     transform: translateX(-105%);
     visibility: hidden;
     transition: transform 0.22s ease, visibility 0.22s ease;
@@ -408,7 +408,7 @@ body.task-page .table {
   }
 
   body.task-page .table {
-    min-width: 580px;
+    min-width: 80px;
   }
 }
 
