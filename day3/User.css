@@ -14,11 +14,61 @@ body {
 .modal-content {
     border-radius: 10px;
 }
+.mudit-pathak {
+    margin-bottom: 0;
+    background-color: #163758;
+    border-radius: 10px;
+}
 
 table {
     margin-bottom: 0;
 }
+/* Edit button */
+.edit-btn {
+    background-color: #163758 !important;
+    border-color: #163758 !important;
+    color: #ffffff !important;
+}
 
+.edit-btn:hover {
+    background-color: #163758 !important;
+    border-color: #163758 !important;
+}
+
+/* Delete button */
+.delete-btn {
+    background-color: #DC1D47 !important;
+    border-color: #DC1D47 !important;
+    color: #ffffff !important;
+}
+
+.delete-btn:hover {
+    background-color: #DC1D47 !important;
+    border-color: #DC1D47 !important;
+}
+/* Cancel button */
+.modal-footer .btn-secondary {
+    background-color: #DC1D47 !important;
+    border-color: #DC1D47 !important;
+    color: #ffffff !important;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #565e64 !important;
+    border-color: #565e64 !important;
+}
+
+/* Save Changes button */
+.modal-footer .btn-success {
+    background-color: #163758 !important;
+    border-color: #163758 !important;
+    color: #ffffff !important;
+}
+
+.modal-footer .btn-success:hover {
+    background-color: #3a0f8a !important;
+    border-color: #3a0f8a !important;
+}
 @media (max-width: 576px) {
 
     .container {
