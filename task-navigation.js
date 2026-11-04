@@ -100,6 +100,7 @@
     const link = document.createElement('a');
     const isCurrent = index === currentPageIndex;
     link.href = buildUrl(page.href);
+    link.title = page.label;
     link.className = `task-nav-link${isCurrent ? ' is-current' : ''}`;
     if (isCurrent) {
       link.setAttribute('aria-current', 'page');
@@ -131,16 +132,13 @@
   const nextPage = pages[currentPageIndex + 1];
   const footer = document.createElement('footer');
   footer.className = 'task-nav-footer';
-  footer.innerHTML = `
+    footer.innerHTML = `
     <div class="task-nav-footer-inner">
       <div class="task-nav-footer-brand">
-        <div>
-          <div class="task-nav-footer-title">All rights reserved © 2026 Jeebly LLC
-</div>
-<div class "task-nav-footer">Facility # 1 & 3, Plot # 368-212,
-Al Quoz Industrial Area - 3, Dubai,
-United Arab Emirates.
-Monday to Saturday 9 AM to 5:30 PM
+        <div class="task-nav-footer-title">All rights reserved © 2026 Jeebly LLC</div>
+        <div class="task-nav-footer-address">
+          Facility # 1 &amp; 3, Plot # 368-212, Al Quoz Industrial Area - 3, Dubai, United Arab Emirates.
+          Monday to Saturday 9 AM to 5:30 PM
         </div>
       </div>
 

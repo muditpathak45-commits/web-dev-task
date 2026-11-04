@@ -1,5 +1,8 @@
 ﻿const API_BASE_URL = 'https://dummyjson.com';
 const PAGE_SIZE = 10;
+const DEPARTMENTS = ['Engineering', 'Finance', 'HR', 'Marketing', 'Operations'];
+const PROJECT_STATUSES = ['Active', 'Completed', 'In Progress'];
+
 const employees = [];
 const state = {
     currentPage: 1,
@@ -7,163 +10,7 @@ const state = {
     deletingId: null,
     isLoading: false,
 };
-
-const defaultEmployees = [
-    {
-        id: 1,
-        name: 'John Smith',
-        email: 'john@gmail.com',
-        mobile: '9876543210',
-        department: 'Engineering',
-        joiningDate: '2026-01-12',
-        status: 'Active',
-        projects: [
-            { name: 'Project A', status: 'Active' },
-            { name: 'Project B', status: 'Completed' },
-            { name: 'Project C', status: 'Active' }
-        ]
-    },
-    {
-        id: 2,
-        name: 'David Lee',
-        email: 'david@gmail.com',
-        mobile: '9876543211',
-        department: 'Finance',
-        joiningDate: '2025-06-08',
-        status: 'Active',
-        projects: [
-            { name: 'Project D', status: 'Completed' },
-            { name: 'Project E', status: 'In Progress' },
-            { name: 'Project F', status: 'Active' }
-        ]
-    },
-    {
-        id: 3,
-        name: 'Sarah Khan',
-        email: 'sarah@gmail.com',
-        mobile: '9876543212',
-        department: 'HR',
-        joiningDate: '2024-09-18',
-        status: 'Inactive',
-        projects: [
-            { name: 'Project G', status: 'Completed' },
-            { name: 'Project H', status: 'Completed' }
-        ]
-    },
-    {
-        id: 4,
-        name: 'Priya Sharma',
-        email: 'priya@gmail.com',
-        mobile: '9876543213',
-        department: 'Engineering',
-        joiningDate: '2025-03-01',
-        status: 'Active',
-        projects: [
-            { name: 'Project I', status: 'In Progress' },
-            { name: 'Project J', status: 'Active' }
-        ]
-    },
-    {
-        id: 5,
-        name: 'Nikhil Roy',
-        email: 'nikhil@gmail.com',
-        mobile: '9876543214',
-        department: 'Marketing',
-        joiningDate: '2024-11-10',
-        status: 'Active',
-        projects: [
-            { name: 'Project K', status: 'Completed' }
-        ]
-    },
-    {
-        id: 6,
-        name: 'Aisha Ali',
-        email: 'aisha@gmail.com',
-        mobile: '9876543215',
-        department: 'Operations',
-        joiningDate: '2022-01-22',
-        status: 'Inactive',
-        projects: []
-    },
-    {
-        id: 7,
-        name: 'Rohit Verma',
-        email: 'rohit@gmail.com',
-        mobile: '9876543216',
-        department: 'Engineering',
-        joiningDate: '2023-08-14',
-        status: 'Active',
-        projects: [
-            { name: 'Project L', status: 'Active' },
-            { name: 'Project M', status: 'Active' },
-            { name: 'Project N', status: 'In Progress' }
-        ]
-    },
-    {
-        id: 8,
-        name: 'Meera Singh',
-        email: 'meera@gmail.com',
-        mobile: '9876543217',
-        department: 'Finance',
-        joiningDate: '2025-02-04',
-        status: 'Active',
-        projects: [
-            { name: 'Project O', status: 'Completed' },
-            { name: 'Project P', status: 'Completed' },
-            { name: 'Project Q', status: 'Completed' },
-            { name: 'Project R', status: 'Active' }
-        ]
-    },
-    {
-        id: 9,
-        name: 'Arjun Patel',
-        email: 'arjun@gmail.com',
-        mobile: '9876543218',
-        department: 'HR',
-        joiningDate: '2024-05-13',
-        status: 'Inactive',
-        projects: [
-            { name: 'Project S', status: 'Completed' }
-        ]
-    },
-    {
-        id: 10,
-        name: 'Laura Gomez',
-        email: 'laura@gmail.com',
-        mobile: '9876543219',
-        department: 'Marketing',
-        joiningDate: '2021-12-16',
-        status: 'Active',
-        projects: [
-            { name: 'Project T', status: 'Active' },
-            { name: 'Project U', status: 'Completed' }
-        ]
-    },
-    {
-        id: 11,
-        name: 'Karan Malhotra',
-        email: 'karan@gmail.com',
-        mobile: '9876543220',
-        department: 'Operations',
-        joiningDate: '2024-07-25',
-        status: 'Active',
-        projects: [
-            { name: 'Project V', status: 'In Progress' },
-            { name: 'Project W', status: 'Active' },
-            { name: 'Project X', status: 'Completed' }
-        ]
-    },
-    {
-        id: 12,
-        name: 'Neha Rao',
-        email: 'neha@gmail.com',
-        mobile: '9876543221',
-        department: 'Engineering',
-        joiningDate: '2023-01-08',
-        status: 'Inactive',
-        projects: []
-    }
-];
+let alertTimer = null;
 
 const elements = {
     totalEmployees: document.getElementById('totalEmployees'),
@@ -179,14 +26,11 @@ const elements = {
     pagination: document.getElementById('pagination'),
     paginationInfo: document.getElementById('paginationInfo'),
     alertBox: document.getElementById('alertBox'),
-    detailModal: document.getElementById('detailModal'),
     detailModalBody: document.getElementById('detailModalBody'),
-    employeeFormModal: document.getElementById('employeeFormModal'),
     employeeForm: document.getElementById('employeeForm'),
     employeeFormTitle: document.getElementById('employeeFormTitle'),
     formError: document.getElementById('formError'),
     addEmployeeBtn: document.getElementById('addEmployeeBtn'),
-    deleteModal: document.getElementById('deleteModal'),
     confirmDeleteBtn: document.getElementById('confirmDeleteBtn'),
     employeeName: document.getElementById('employeeName'),
     employeeEmail: document.getElementById('employeeEmail'),
@@ -196,8 +40,15 @@ const elements = {
     employeeStatus: document.getElementById('employeeStatus'),
 };
 
+
 function normalizeValue(value) {
     return String(value || '').trim().toLowerCase();
+}
+
+function escapeHtml(value) {
+    const div = document.createElement('div');
+    div.textContent = String(value === undefined || value === null ? '' : value);
+    return div.innerHTML;
 }
 
 function formatDisplayDate(dateValue) {
@@ -210,12 +61,17 @@ function formatDisplayDate(dateValue) {
         day: '2-digit',
         month: 'short',
         year: 'numeric'
-    }).format(date);
+    }).format(date).replace(/ /g, '-');
 }
 
 function formatProjectSummary(employee) {
-    if (!employee.projects || !employee.projects.length) return '0';
-    return String(employee.projects.length);
+    return String(Array.isArray(employee.projects) ? employee.projects.length : 0);
+}
+
+function projectBadgeClass(status) {
+    if (status === 'Active') return 'active-badge';
+    if (status === 'In Progress') return 'bg-warning text-dark';
+    return 'bg-secondary';
 }
 
 function getProjectStatusMatches(employee, projectStatus) {
@@ -232,169 +88,135 @@ function getProjectStatusMatches(employee, projectStatus) {
 
 function showAlert(message, type, isRetryable) {
     const box = elements.alertBox;
-    box.className = `alert ${type === 'success' ? 'alert-success' : type === 'error' ? 'alert-danger' : 'alert-warning'} ${message ? '' : 'd-none'}`;
+    clearTimeout(alertTimer);
 
     if (!message) {
         box.textContent = '';
-        box.classList.add('d-none');
+        box.className = 'alert d-none';
         return;
     }
 
+    const alertClass = type === 'success' ? 'alert-success' : type === 'error' ? 'alert-danger' : 'alert-warning';
+    box.className = 'alert ' + alertClass;
+
     const retryButtonMarkup = isRetryable
-        ? '<button type="button" id="retryLoadBtn" class="btn btn-sm btn-outline-light ms-3">Retry</button>'
+        ? '<button type="button" id="retryLoadBtn" class="btn btn-sm btn-outline-danger ms-3">Retry</button>'
         : '';
 
-    box.innerHTML = `${message}${retryButtonMarkup}`;
-    box.classList.remove('d-none');
+    box.innerHTML = escapeHtml(message) + retryButtonMarkup;
 
     if (isRetryable) {
-        const retryBtn = document.getElementById('retryLoadBtn');
-        if (retryBtn) {
-            retryBtn.addEventListener('click', function () {
-                loadEmployees();
-            });
-        }
+        document.getElementById('retryLoadBtn').addEventListener('click', loadEmployees);
+    }
+
+    if (type === 'success') {
+        alertTimer = setTimeout(function () {
+            showAlert('', 'success', false);
+        }, 3000);
     }
 }
 
-function getDefaultProjectList(seed) {
-    const projectNames = ['Project Alpha', 'Project Beta', 'Project Gamma', 'Project Delta'];
-    return projectNames.map(function (name, index) {
+function buildProjectList(seed) {
+    const count = seed % 7 === 0 ? 0 : (seed % 7) % 4 + 1;
+    return Array.from({ length: count }, function (_, index) {
         return {
-            name: name,
-            status: index % 2 === 0 ? 'Active' : 'Completed'
-        };
-    }).map(function (project, index) {
-        return {
-            name: project.name + ' ' + (seed % 10 + index + 1),
-            status: project.status
+            name: 'Project ' + seed + '-' + (index + 1),
+            status: PROJECT_STATUSES[(seed + index) % 3]
         };
     });
 }
 
+function buildJoiningDate(seed) {
+    const year = 2021 + (seed % 5);
+    const month = String((seed * 3) % 12 + 1).padStart(2, '0');
+    const day = String((seed * 7) % 28 + 1).padStart(2, '0');
+    return year + '-' + month + '-' + day;
+}
+
 function mapApiUserToEmployee(user) {
+    const id = user.id || Date.now();
     const fullName = user.name || [user.firstName, user.lastName].filter(Boolean).join(' ') || 'Employee';
-    const department = user.department || user.company?.department || ['Engineering', 'Finance', 'HR', 'Marketing', 'Operations'][(user.id || 1) % 5];
-    const rawProjects = Array.isArray(user.projects) && user.projects.length
-        ? user.projects
-        : getDefaultProjectList(user.id || 1);
 
     return {
-        id: user.id || Date.now() + Math.random(),
+        id: id,
         name: fullName,
-        email: user.email || `${fullName.toLowerCase().replace(/\s+/g, '.')}@example.com`,
-        mobile: user.phone || user.mobile || '0000000000',
-        department: department,
-        joiningDate: user.joiningDate || user.createdAt || '2025-01-01',
-        status: user.status || ((user.id || 1) % 2 === 0 ? 'Active' : 'Inactive'),
-        projects: rawProjects.map(function (project, index) {
-            return {
-                name: project.name || `Project ${index + 1}`,
-                status: project.status || (index % 2 === 0 ? 'Active' : 'Completed')
-            };
-        })
+        email: user.email || fullName.toLowerCase().replace(/\s+/g, '.') + '@example.com',
+        mobile: user.mobile || user.phone || '0000000000',
+        department: DEPARTMENTS.includes(user.department) ? user.department : DEPARTMENTS[id % 5],
+        joiningDate: user.joiningDate || buildJoiningDate(id),
+        status: user.status || (id % 2 === 0 ? 'Active' : 'Inactive'),
+        projects: Array.isArray(user.projects) ? user.projects : buildProjectList(id)
     };
 }
 
+async function apiRequest(path, options) {
+    const response = await fetch(API_BASE_URL + path, options);
+    if (!response.ok) {
+        throw new Error('Request failed with status ' + response.status);
+    }
+    return response.json();
+}
+
 async function getEmployees() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/users?limit=50`);
-        if (!response.ok) throw new Error('Failed to fetch users');
+    const payload = await apiRequest('/users?limit=50');
+    const users = Array.isArray(payload.users) ? payload.users : [];
 
-        const payload = await response.json();
-        const users = Array.isArray(payload.users) ? payload.users : Array.isArray(payload) ? payload : [];
-
-        if (!users.length) {
-            throw new Error('No employee data returned');
-        }
-
-        return users.map(mapApiUserToEmployee);
-    } catch (error) {
-        console.warn('Using fallback employee data', error);
-        return defaultEmployees.map(function (employee) {
-            return {
-                ...employee,
-                projects: employee.projects ? employee.projects.map(function (project) {
-                    return { ...project };
-                }) : []
-            };
-        });
+    if (!users.length) {
+        throw new Error('No employee data returned');
     }
+
+    return users.map(mapApiUserToEmployee);
 }
 
-async function createEmployee(employee) {
-    try {
-        const response = await fetch(`${API_BASE_URL}/users/add`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(employee)
-        });
+async function getEmployeeById(id) {
+    const localEmployee = employees.find(function (item) {
+        return item.id === id;
+    });
 
-        if (!response.ok) {
-            throw new Error('Create failed');
-        }
+    if (!localEmployee) return null;
+    if (localEmployee.local) return localEmployee;
 
-        const created = await response.json();
-        return mapApiUserToEmployee(created);
-    } catch (error) {
-        const fallbackId = Date.now();
-        const fallback = {
-            ...employee,
-            id: fallbackId,
-            projects: [{ name: 'New Project', status: 'Active' }],
-            status: employee.status || 'Active'
-        };
-        employees.unshift(fallback);
-        return fallback;
-    }
+    const fresh = mapApiUserToEmployee(await apiRequest('/users/' + id));
+    return { ...fresh, ...localEmployee };
 }
 
-async function updateEmployee(id, employee) {
-    try {
-        const response = await fetch(`${API_BASE_URL}/users/${id}`, {
+async function createEmployee(values) {
+    await apiRequest('/users/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+    });
+
+    return { ...values, id: Date.now(), projects: [], local: true };
+}
+
+async function updateEmployee(id, values) {
+    const existing = employees.find(function (item) {
+        return item.id === id;
+    });
+    if (!existing) throw new Error('Employee not found');
+
+    if (!existing.local) {
+        await apiRequest('/users/' + id, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(employee)
+            body: JSON.stringify(values)
         });
-
-        if (!response.ok) {
-            throw new Error('Update failed');
-        }
-
-        const updated = await response.json();
-        return mapApiUserToEmployee(updated);
-    } catch (error) {
-        const index = employees.findIndex(function (item) {
-            return item.id === id;
-        });
-
-        if (index !== -1) {
-            employees[index] = {
-                ...employees[index],
-                ...employee,
-                projects: employees[index].projects || [{ name: 'Updated Project', status: 'Active' }]
-            };
-            return employees[index];
-        }
-
-        return employee;
     }
+
+    return { ...existing, ...values };
 }
 
 async function deleteEmployee(id) {
-    try {
-        const response = await fetch(`${API_BASE_URL}/users/${id}`, {
-            method: 'DELETE'
-        });
+    const existing = employees.find(function (item) {
+        return item.id === id;
+    });
 
-        if (!response.ok) {
-            throw new Error('Delete failed');
-        }
-
-        return true;
-    } catch (error) {
-        return true;
+    if (existing && !existing.local) {
+        await apiRequest('/users/' + id, { method: 'DELETE' });
     }
+
+    return true;
 }
 
 function getFilteredEmployees() {
@@ -404,7 +226,7 @@ function getFilteredEmployees() {
     const projectStatusValue = elements.projectStatusFilter.value;
     const sortValue = elements.sortFilter.value;
 
-    let filtered = employees.filter(function (employee) {
+    const filtered = employees.filter(function (employee) {
         const matchSearch = !searchValue ||
             normalizeValue(employee.name).includes(searchValue) ||
             normalizeValue(employee.email).includes(searchValue);
@@ -416,36 +238,33 @@ function getFilteredEmployees() {
         return matchSearch && matchDepartment && matchStatus && matchProjectStatus;
     });
 
-    if (sortValue && sortValue !== 'none') {
-        filtered = [...filtered].sort(function (a, b) {
-            switch (sortValue) {
-                case 'nameAsc':
-                    return a.name.localeCompare(b.name);
-                case 'nameDesc':
-                    return b.name.localeCompare(a.name);
-                case 'projectsAsc':
-                    return (a.projects || []).length - (b.projects || []).length;
-                case 'projectsDesc':
-                    return (b.projects || []).length - (a.projects || []).length;
-                case 'joiningAsc':
-                    return new Date(a.joiningDate) - new Date(b.joiningDate);
-                case 'joiningDesc':
-                    return new Date(b.joiningDate) - new Date(a.joiningDate);
-                case 'statusAsc':
-                    return normalizeValue(a.status).localeCompare(normalizeValue(b.status));
-                case 'statusDesc':
-                    return normalizeValue(b.status).localeCompare(normalizeValue(a.status));
-                default:
-                    return 0;
-            }
-        });
-    }
-
-    return filtered;
+    return filtered.sort(function (a, b) {
+        switch (sortValue) {
+            case 'nameAsc':
+                return a.name.localeCompare(b.name);
+            case 'nameDesc':
+                return b.name.localeCompare(a.name);
+            case 'projectsAsc':
+                return (a.projects || []).length - (b.projects || []).length;
+            case 'projectsDesc':
+                return (b.projects || []).length - (a.projects || []).length;
+            case 'joiningAsc':
+                return new Date(a.joiningDate) - new Date(b.joiningDate);
+            case 'joiningDesc':
+                return new Date(b.joiningDate) - new Date(a.joiningDate);
+            case 'statusAsc':
+                return normalizeValue(a.status).localeCompare(normalizeValue(b.status));
+            case 'statusDesc':
+                return normalizeValue(b.status).localeCompare(normalizeValue(a.status));
+            default:
+                return 0;
+        }
+    });
 }
 
 function updateDashboardStats() {
     elements.totalEmployees.textContent = employees.length;
+
     elements.activeEmployees.textContent = employees.filter(function (employee) {
         return normalizeValue(employee.status) === 'active';
     }).length;
@@ -464,12 +283,11 @@ function updateDashboardStats() {
 
 function renderPagination(filteredEmployees) {
     const totalPages = Math.max(1, Math.ceil(filteredEmployees.length / PAGE_SIZE));
-    state.currentPage = Math.min(state.currentPage, totalPages);
 
     elements.pagination.innerHTML = '';
 
     const previousItem = document.createElement('li');
-    previousItem.className = `page-item ${state.currentPage === 1 ? 'disabled' : ''}`;
+    previousItem.className = 'page-item ' + (state.currentPage === 1 ? 'disabled' : '');
     previousItem.innerHTML = '<button class="page-link" type="button" aria-label="Previous" ' + (state.currentPage === 1 ? 'disabled' : '') + '>Previous</button>';
     previousItem.querySelector('button').addEventListener('click', function () {
         if (state.currentPage > 1) {
@@ -481,7 +299,7 @@ function renderPagination(filteredEmployees) {
 
     for (let page = 1; page <= totalPages; page += 1) {
         const pageItem = document.createElement('li');
-        pageItem.className = `page-item ${page === state.currentPage ? 'active' : ''}`;
+        pageItem.className = 'page-item ' + (page === state.currentPage ? 'active' : '');
         pageItem.innerHTML = '<button class="page-link" type="button" aria-label="Page ' + page + '">' + page + '</button>';
         pageItem.querySelector('button').addEventListener('click', function () {
             state.currentPage = page;
@@ -491,7 +309,7 @@ function renderPagination(filteredEmployees) {
     }
 
     const nextItem = document.createElement('li');
-    nextItem.className = `page-item ${state.currentPage === totalPages ? 'disabled' : ''}`;
+    nextItem.className = 'page-item ' + (state.currentPage === totalPages ? 'disabled' : '');
     nextItem.innerHTML = '<button class="page-link" type="button" aria-label="Next" ' + (state.currentPage === totalPages ? 'disabled' : '') + '>Next</button>';
     nextItem.querySelector('button').addEventListener('click', function () {
         if (state.currentPage < totalPages) {
@@ -509,7 +327,7 @@ function renderPagination(filteredEmployees) {
 
     const startItem = (state.currentPage - 1) * PAGE_SIZE + 1;
     const endItem = Math.min(state.currentPage * PAGE_SIZE, totalCount);
-    elements.paginationInfo.textContent = `Showing ${startItem}-${endItem} of ${totalCount}`;
+    elements.paginationInfo.textContent = 'Showing ' + startItem + '-' + endItem + ' of ' + totalCount;
 }
 
 function renderTable(filteredEmployees) {
@@ -517,7 +335,7 @@ function renderTable(filteredEmployees) {
     tableBody.innerHTML = '';
 
     if (!filteredEmployees.length) {
-        tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No employees match your filters.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">No employees found.</td></tr>';
         return;
     }
 
@@ -527,11 +345,11 @@ function renderTable(filteredEmployees) {
     paginatedEmployees.forEach(function (employee) {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><strong>${employee.name}</strong></td>
-            <td>${employee.email}</td>
-            <td>${employee.department}</td>
+            <td><strong>${escapeHtml(employee.name)}</strong></td>
+            <td>${escapeHtml(employee.email)}</td>
+            <td>${escapeHtml(employee.department)}</td>
             <td>${formatProjectSummary(employee)}</td>
-            <td><span class="badge ${employee.status === 'Active' ? 'active-badge' : 'inactive-badge'}">${employee.status}</span></td>
+            <td><span class="badge ${employee.status === 'Active' ? 'active-badge' : 'inactive-badge'}">${escapeHtml(employee.status)}</span></td>
             <td>
                 <button type="button" class="btn btn-sm me-1 view-btn" data-action="view" data-id="${employee.id}">View</button>
                 <button type="button" class="btn btn-sm me-1 edit-btn" data-action="edit" data-id="${employee.id}">Edit</button>
@@ -546,9 +364,9 @@ function renderDashboard() {
     updateDashboardStats();
 
     const filteredEmployees = getFilteredEmployees();
-    if (!filteredEmployees.length) {
-        state.currentPage = 1;
-    }
+
+    const totalPages = Math.max(1, Math.ceil(filteredEmployees.length / PAGE_SIZE));
+    state.currentPage = Math.min(Math.max(state.currentPage, 1), totalPages);
 
     renderTable(filteredEmployees);
     renderPagination(filteredEmployees);
@@ -575,10 +393,15 @@ function closeModal(modalId) {
     document.body.classList.toggle('modal-open', openedModals.length > 0);
 }
 
-function showEmployeeDetails(employeeId) {
-    const employee = employees.find(function (item) {
-        return item.id === employeeId;
-    });
+async function showEmployeeDetails(employeeId) {
+    let employee;
+
+    try {
+        employee = await getEmployeeById(employeeId);
+    } catch (error) {
+        showAlert('Unable to load employee details. Please try again.', 'error', false);
+        return;
+    }
 
     if (!employee) return;
 
@@ -586,8 +409,8 @@ function showEmployeeDetails(employeeId) {
         ? employee.projects.map(function (project) {
             return `
                 <div class="project-row d-flex justify-content-between align-items-center py-2 border-bottom">
-                    <span>${project.name}</span>
-                    <span class="badge ${project.status === 'Active' ? 'active-badge' : 'inactive-badge'}">${project.status}</span>
+                    <span>${escapeHtml(project.name)}</span>
+                    <span class="badge ${projectBadgeClass(project.status)}">${escapeHtml(project.status)}</span>
                 </div>
             `;
         }).join('')
@@ -595,12 +418,12 @@ function showEmployeeDetails(employeeId) {
 
     elements.detailModalBody.innerHTML = `
         <div class="row g-3">
-            <div class="col-md-6"><strong>Name:</strong><div>${employee.name}</div></div>
-            <div class="col-md-6"><strong>Email:</strong><div>${employee.email}</div></div>
-            <div class="col-md-6"><strong>Department:</strong><div>${employee.department}</div></div>
+            <div class="col-md-6"><strong>Name:</strong><div>${escapeHtml(employee.name)}</div></div>
+            <div class="col-md-6"><strong>Email:</strong><div>${escapeHtml(employee.email)}</div></div>
+            <div class="col-md-6"><strong>Department:</strong><div>${escapeHtml(employee.department)}</div></div>
             <div class="col-md-6"><strong>Joining Date:</strong><div>${formatDisplayDate(employee.joiningDate)}</div></div>
-            <div class="col-md-6"><strong>Status:</strong><div><span class="badge ${employee.status === 'Active' ? 'active-badge' : 'inactive-badge'}">${employee.status}</span></div></div>
-            <div class="col-md-6"><strong>Mobile:</strong><div>${employee.mobile}</div></div>
+            <div class="col-md-6"><strong>Status:</strong><div><span class="badge ${employee.status === 'Active' ? 'active-badge' : 'inactive-badge'}">${escapeHtml(employee.status)}</span></div></div>
+            <div class="col-md-6"><strong>Mobile:</strong><div>${escapeHtml(employee.mobile)}</div></div>
         </div>
         <div class="mt-4">
             <h6 class="mb-3">Projects</h6>
@@ -652,7 +475,14 @@ function getEmployeeFormValues() {
 
 function validateEmployeeForm(values) {
     if (!values.name) return 'Name is required.';
+    if (values.name.length < 2) return 'Name must be at least 2 characters.';
     if (!values.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) return 'Please enter a valid email.';
+
+    const emailTaken = employees.some(function (employee) {
+        return normalizeValue(employee.email) === normalizeValue(values.email) && employee.id !== state.editingId;
+    });
+    if (emailTaken) return 'This email is already used by another employee.';
+
     if (!values.mobile || values.mobile.replace(/\D/g, '').length < 10) return 'Mobile number must contain at least 10 digits.';
     if (!values.department) return 'Please select a department.';
     if (!values.joiningDate) return 'Joining date is required.';
@@ -676,40 +506,30 @@ async function handleEmployeeSubmit(event) {
         mobile: values.mobile.replace(/\D/g, '')
     };
 
-    try {
-        let savedEmployee;
+    const submitButton = elements.employeeForm.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
 
+    try {
         if (state.editingId !== null) {
-            const existing = employees.find(function (employee) {
+            const updated = await updateEmployee(state.editingId, payload);
+            const index = employees.findIndex(function (employee) {
                 return employee.id === state.editingId;
             });
-
-            savedEmployee = await updateEmployee(state.editingId, {
-                ...existing,
-                ...payload,
-                projects: existing ? existing.projects : [{ name: 'Updated Project', status: 'Active' }]
-            });
+            if (index !== -1) employees[index] = updated;
         } else {
-            savedEmployee = await createEmployee(payload);
-        }
-
-        const index = employees.findIndex(function (employee) {
-            return employee.id === savedEmployee.id;
-        });
-
-        if (state.editingId !== null && index !== -1) {
-            employees[index] = savedEmployee;
-        } else if (index === -1) {
-            employees.unshift(savedEmployee);
+            const created = await createEmployee(payload);
+            employees.unshift(created);
         }
 
         resetEmployeeForm();
         closeModal('employeeFormModal');
         renderDashboard();
         showAlert('Employee saved successfully.', 'success', false);
-    } catch (error) {
+    } catch (saveError) {
         elements.formError.textContent = 'Unable to save employee. Please try again.';
         elements.formError.classList.remove('d-none');
+    } finally {
+        submitButton.disabled = false;
     }
 }
 
@@ -721,64 +541,76 @@ function confirmDeleteEmployee(employeeId) {
 async function handleDeleteConfirmation() {
     if (state.deletingId === null) return;
 
-    try {
-        await deleteEmployee(state.deletingId);
-        const index = employees.findIndex(function (employee) {
-            return employee.id === state.deletingId;
-        });
+    const idToDelete = state.deletingId;
 
+    try {
+        await deleteEmployee(idToDelete);
+
+        const index = employees.findIndex(function (employee) {
+            return employee.id === idToDelete;
+        });
         if (index !== -1) {
             employees.splice(index, 1);
         }
 
         state.deletingId = null;
         closeModal('deleteModal');
-        renderDashboard();
+        renderDashboard(); 
         showAlert('Employee deleted successfully.', 'success', false);
     } catch (error) {
+        state.deletingId = null;
+        closeModal('deleteModal');
         showAlert('Unable to delete employee. Please try again.', 'error', false);
     }
 }
 
+function showLoadingState() {
+    showAlert('', 'warning', false);
+    elements.employeeTableBody.innerHTML =
+        '<tr><td colspan="6" class="text-center text-muted py-4">' +
+        '<div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>' +
+        'Loading employees...</td></tr>';
+    elements.pagination.innerHTML = '';
+    elements.paginationInfo.textContent = '';
+}
+
+function showErrorState() {
+    employees.splice(0, employees.length);
+    updateDashboardStats();
+    elements.employeeTableBody.innerHTML =
+        '<tr><td colspan="6" class="text-center text-danger py-4">Unable to load employees.</td></tr>';
+    elements.pagination.innerHTML = '';
+    elements.paginationInfo.textContent = '';
+    showAlert('Unable to load employees.', 'error', true);
+}
+
 async function loadEmployees() {
     state.isLoading = true;
-    showAlert('Loading employees...', 'warning', false);
+    showLoadingState();
 
     try {
         const loadedEmployees = await getEmployees();
         employees.splice(0, employees.length, ...loadedEmployees);
         state.currentPage = 1;
-        renderDashboard();
         showAlert('', 'success', false);
+        renderDashboard();
     } catch (error) {
-        showAlert('Unable to load employees. Please try again.', 'error', true);
+        console.error(error);
+        showErrorState();
     } finally {
         state.isLoading = false;
     }
 }
 
 function bindEvents() {
+    [elements.departmentFilter, elements.statusFilter, elements.projectStatusFilter, elements.sortFilter].forEach(function (select) {
+        select.addEventListener('change', function () {
+            state.currentPage = 1;
+            renderDashboard();
+        });
+    });
+
     elements.searchInput.addEventListener('input', function () {
-        state.currentPage = 1;
-        renderDashboard();
-    });
-
-    elements.departmentFilter.addEventListener('change', function () {
-        state.currentPage = 1;
-        renderDashboard();
-    });
-
-    elements.statusFilter.addEventListener('change', function () {
-        state.currentPage = 1;
-        renderDashboard();
-    });
-
-    elements.projectStatusFilter.addEventListener('change', function () {
-        state.currentPage = 1;
-        renderDashboard();
-    });
-
-    elements.sortFilter.addEventListener('change', function () {
         state.currentPage = 1;
         renderDashboard();
     });
@@ -797,23 +629,14 @@ function bindEvents() {
             const action = actionTarget.getAttribute('data-action');
             const employeeId = Number(actionTarget.getAttribute('data-id'));
 
-            if (action === 'view') {
-                showEmployeeDetails(employeeId);
-            }
-
-            if (action === 'edit') {
-                populateFormForEdit(employeeId);
-            }
-
-            if (action === 'delete') {
-                confirmDeleteEmployee(employeeId);
-            }
+            if (action === 'view') showEmployeeDetails(employeeId);
+            if (action === 'edit') populateFormForEdit(employeeId);
+            if (action === 'delete') confirmDeleteEmployee(employeeId);
         }
 
         const closeTrigger = event.target.closest('[data-close]');
         if (closeTrigger) {
-            const modalId = closeTrigger.getAttribute('data-close');
-            closeModal(modalId);
+            closeModal(closeTrigger.getAttribute('data-close'));
         }
     });
 }

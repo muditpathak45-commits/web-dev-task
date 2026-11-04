@@ -9,7 +9,6 @@
     />
     <title>Web Development Tasks</title>
     <link rel="stylesheet" href="index.css" />
-    
   </head>
   <body>
     <header class="site-header">
@@ -20,31 +19,40 @@
 
     <div class="dashboard-layout" id="dashboardLayout">
       <aside class="dashboard-sidebar" aria-label="Task navigation">
-        <button class="dashboard-toggle" type="button" aria-label="Toggle sidebar" aria-expanded="true" >
+        <button
+          class="dashboard-toggle"
+          type="button"
+          aria-label="Toggle sidebar"
+          aria-expanded="true"
+        >
           ☰
         </button>
         <h2>Pages</h2>
         <nav aria-label="Task pages">
-          <a class="nav-home" href="index.html" aria-current="page"><span class="nav-text">Dashboard</span></a>
+          <a class="nav-home" href="index.html" title="Dashboard" aria-current="page"><span class="nav-text">Dashboard</span></a>
+
           <h3>Day 1</h3>
-          <a class="nav-alert" href="day1/Registration.html"><span class="nav-text">Registration</span></a>
-          <a class="nav-briefcase" href="day1/Login.html"><span class="nav-text">Login</span></a>
+          <a class="nav-register" href="day1/Registration.html" title="Registration"><span class="nav-text">Registration</span></a>
+          <a class="nav-login" href="day1/Login.html" title="Login"><span class="nav-text">Login</span></a>
+
           <h3>Day 2</h3>
-          <a class="nav-map" href="day2/RegistrationValidation.html"><span class="nav-text">Registration V.</span></a>
-          <a class="nav-folder" href="day2/Loginvalidation.html"><span class="nav-text">Login V.</span></a>
+          <a class="nav-shield" href="day2/RegistrationValidation.html" title="Registration Validation"><span class="nav-text">Registration V.</span></a>
+          <a class="nav-lock" href="day2/Loginvalidation.html" title="Login Validation"><span class="nav-text">Login V.</span></a>
+
           <h3>Day 3</h3>
-          <a class="nav-chart" href="day3/User.html"><span class="nav-text">User Man.</span></a>
+          <a class="nav-users" href="day3/User.html" title="User Management"><span class="nav-text">User Man.</span></a>
+
           <h3>Day 4</h3>
-          <a class="nav-db" href="day4/api.html"><span class="nav-text">API Int.</span></a>
+          <a class="nav-code" href="day4/api.html" title="API Integration"><span class="nav-text">API Int.</span></a>
+
           <h3>Day 5</h3>
-          <a class="nav-db" href="day5/Dashboard.html"><span class="nav-text">Dashboard</span></a>
-          
+          <a class="nav-grid" href="day5/Dashboard.html" title="Employee Dashboard"><span class="nav-text">Employees</span></a>
         </nav>
       </aside>
 
       <main class="dashboard">
-        <section class="intro" aria-labelledby="dashboard-title" >
-          <h2 id="dashboard-title">Coding Tasks Dashboard</h1>
+        <section class="intro" aria-labelledby="dashboard-title">
+          <h1 id="dashboard-title">Coding Tasks Dashboard</h1>
           <p>Choose a day and open any task to get started.</p>
         </section>
 
@@ -148,21 +156,21 @@
           </div>
         </section>
 
-         <section class="day-section" aria-labelledby="day-5-title">
+        <section class="day-section" aria-labelledby="day-5-title">
           <div class="day-heading">
             <span class="day-number" aria-hidden="true">05</span>
             <div>
               <p class="eyebrow">Dashboard</p>
-              <h2 id="day-4-title">Day 05</h2>
+              <h2 id="day-5-title">Day 5</h2>
             </div>
           </div>
           <div class="task-grid">
             <article class="task-card">
               <p class="task-type">Dashboard</p>
-              <h3>Dashboard</h3>
-              <p>Create a responsive dashboard</p>
+              <h3>Employee Dashboard</h3>
+              <p>A responsive dashboard with search, filters, sorting, pagination, and add, edit and delete employee.</p>
               <a class="task-link" href="day5/Dashboard.html" data-task>
-                Open Dashboard <span aria-hidden="true">→</span>
+                Open dashboard <span aria-hidden="true">→</span>
               </a>
             </article>
           </div>
@@ -173,7 +181,6 @@
     <footer class="page-footer">
       <div class="footer-content">
         <div class="footer-copy">
-          <p class="eyebrow"></p>
           <h2>Task navigation</h2>
           <p>Choose a task or move through the pages in order.</p>
         </div>
@@ -189,12 +196,15 @@
       </div>
       <p class="copyright">Web Development Tasks</p>
     </footer>
+
     <script>
       const taskSelect = document.getElementById("taskSelect");
       const openTaskButton = document.getElementById("openTaskBtn");
       const dashboardLayout = document.getElementById("dashboardLayout");
       const dashboardSidebar = document.querySelector(".dashboard-sidebar");
       const dashboardToggle = document.querySelector(".dashboard-toggle");
+
+      const mobileQuery = window.matchMedia("(max-width: 760px)");
 
       const setDashboardSidebarState = (isExpanded) => {
         dashboardLayout.classList.toggle("sidebar-collapsed", !isExpanded);
@@ -206,6 +216,17 @@
         dashboardToggle.addEventListener("click", () => {
           const isExpanded = dashboardToggle.getAttribute("aria-expanded") === "true";
           setDashboardSidebarState(!isExpanded);
+        });
+
+        setDashboardSidebarState(!mobileQuery.matches);
+        mobileQuery.addEventListener("change", (event) => {
+          setDashboardSidebarState(!event.matches);
+        });
+
+        document.addEventListener("click", (event) => {
+          if (mobileQuery.matches && !dashboardSidebar.contains(event.target)) {
+            setDashboardSidebarState(false);
+          }
         });
       }
 
