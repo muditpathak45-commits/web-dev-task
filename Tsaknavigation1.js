@@ -45,6 +45,7 @@ function renderTaskNavigation() {
       <span class="profile-avatar" aria-label="User profile">MP</span>
     </div>
   `;
+  
 
   const sidebar = document.createElement("aside");
   sidebar.className = "workspace-sidebar";

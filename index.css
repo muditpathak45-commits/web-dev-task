@@ -42,28 +42,130 @@ svg {
   clip: rect(0, 0, 0, 0);
 }
 
-/* =========================================================
-   Dashboard page: header
-   ========================================================= */
+
 .site-header {
-  padding: 16px 24px;
-  background: var(--navy);
-  color: #fff;
+  padding: 18px 24px 16px;
+  background: #f0f0f0;
+  border-bottom: 4px solid #d7182a;
+  color: #111;
 }
 
 .header-content {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 60px;
 }
 
-.brand {
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.brand-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0d3d6b 0%, #0a2f53 100%);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.brand-mark::before,
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.brand-mark::after {
+  inset: auto 18px 18px 18px;
+  height: 10px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.brand-mark-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #d7182a;
   color: #fff;
-  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  font-size: 1.7rem;
   font-weight: 700;
-  text-decoration: none;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  line-height: 1;
+}
+
+.brand-text-wrap {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.brand-name {
+  font-size: clamp(2.2rem, 2.8vw, 4rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  color: #111;
+}
+
+.brand-tagline {
+  margin-top: 6px;
+  color: #d7182a;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+  min-width: 0;
+}
+
+.user-avatar {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #d6d6d6;
+  color: #1a1a1a;
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.user-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.user-name {
+  color: #181818;
+  font-size: clamp(1.5rem, 2vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.user-role {
+  color: #4d4d4d;
+  font-size: clamp(1rem, 1.5vw, 1.45rem);
+  line-height: 1.35;
 }
 
 /* =========================================================
@@ -102,7 +204,7 @@ svg {
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  color: #DC1D47;
   font-size: 22px;
   line-height: 1;
   cursor: pointer;
@@ -239,7 +341,7 @@ svg {
   grid-row: 1;
   min-width: 0;
   padding: 0 24px 24px;
-  background: #efefef;
+  background: #eceaf9;
 }
 
 .intro {
@@ -401,7 +503,7 @@ svg {
   padding: 8px 12px;
   border: 1px solid var(--navy);
   border-radius: 6px;
-  background: #fff;
+  background: #ffffff;
   font: inherit;
   font-size: 0.95rem;
 }
@@ -828,5 +930,113 @@ svg {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Compact Jeebly Header ---------- */
+
+.site-header {
+  height: 105px;
+  min-height: 105px;
+  padding: 10px 24px;
+  background: #f8f5f5;
+  border-bottom: 1px solid #eee8e8;
+  box-shadow: none;
+}
+
+.header-content {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Logo section */
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+}
+
+.brand-mark-inner {
+  width: 25px;
+  height: 25px;
+  font-size: 1.2rem;
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.brand-tagline {
+  margin-top: 4px;
+  font-size: 0.7rem;
+}
+
+/* User profile section */
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  font-size: 1.2rem;
+}
+
+.user-name {
+  font-size: 1.2rem;
+}
+
+.user-role {
+  font-size: 0.95rem;
+}
+
+/* Remove oversized header spacing */
+.site-header::after {
+  display: none;
+}
+
+/* Responsive header */
+@media (max-width: 600px) {
+  .site-header {
+    height: 80px;
+    min-height: 80px;
+    padding: 8px 12px;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+
+  .user-name {
+    font-size: 0.9rem;
+  }
+
+  .user-role {
+    font-size: 0.75rem;
   }
 }
