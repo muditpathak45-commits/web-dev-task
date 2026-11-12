@@ -14,11 +14,9 @@
     <header class="site-header">
       <div class="header-content">
         <div class="brand-lockup" aria-label="Jeebly logo">
-          <div class= aria-hidden="true">
+          <div class="task-nav-logo">
+            <img src="https://jeebly.com/wp-content/uploads/2022/01/og-image-2.jpg" alt="Jeebly logo">
           </div>
-            <div class="task-nav-logo">
-        <img src="https://jeebly.com/wp-content/uploads/2022/01/og-image-2.jpg" alt="Logo">
-      </div>
         </div>
 
         <div class="header-user" aria-label="User profile">
@@ -226,23 +224,21 @@
         dashboardToggle.setAttribute("aria-expanded", String(isExpanded));
       };
 
-      if (dashboardToggle && dashboardLayout && dashboardSidebar) {
-        dashboardToggle.addEventListener("click", () => {
-          const isExpanded = dashboardToggle.getAttribute("aria-expanded") === "true";
-          setDashboardSidebarState(!isExpanded);
-        });
+      dashboardToggle.addEventListener("click", () => {
+        const isExpanded = dashboardToggle.getAttribute("aria-expanded") === "true";
+        setDashboardSidebarState(!isExpanded);
+      });
 
-        setDashboardSidebarState(!mobileQuery.matches);
-        mobileQuery.addEventListener("change", (event) => {
-          setDashboardSidebarState(!event.matches);
-        });
+      setDashboardSidebarState(!mobileQuery.matches);
+      mobileQuery.addEventListener("change", (event) => {
+        setDashboardSidebarState(!event.matches);
+      });
 
-        document.addEventListener("click", (event) => {
-          if (mobileQuery.matches && !dashboardSidebar.contains(event.target)) {
-            setDashboardSidebarState(false);
-          }
-        });
-      }
+      document.addEventListener("click", (event) => {
+        if (mobileQuery.matches && !dashboardSidebar.contains(event.target)) {
+          setDashboardSidebarState(false);
+        }
+      });
 
       document.querySelectorAll("a[data-task]").forEach((taskLink) => {
         const option = document.createElement("option");
